@@ -21,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post("/register", [AuthController::class, "signUp"]);
 Route::post("/login", [AuthController::class, "signIn"]);
+//tokent küldünk,azért post
+Route::post("/logout", [AuthController::class, "logOut"]);
+Route::post("store","DragonController@store");

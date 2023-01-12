@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BaseController as BaseController;
 use Illuminate\Http\Request;
 //igy örökölhetjük a BaseContorller metodusát
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     public function signUp(Request $request){
         //gyártunk egy felhasználót(adataival eggyüt) 
@@ -19,7 +19,7 @@ class AuthController extends Controller
         ]);
         //a validáló nemsikerült
         if($validator->fails() ){
-            //return sendError("Error validation", $validator->errors());
+            return sendError("Error validation", $validator->errors());
         }
 
         $input = $request->all();
@@ -28,7 +28,7 @@ class AuthController extends Controller
         $user = User::create($input);
         $success["name"] = $user->name;
 
-        //return $this->sendResponse($success,"Sikeres Regisztráció");
+        return $this->sendResponse($success,"Sikeres Regisztráció");
     }
 
     public function signIn(Request $request)
@@ -42,14 +42,21 @@ class AuthController extends Controller
             $success["token"] = $authUser->createToken("MyAuthApp")->plainTextToken;
             $success["name"] = $authUser->name;
             //addig kell tárolni a tokent amig ki nem jelentkezik
-            print_r("siker");
             //basecontrollerből hivjuk ezt
-            //return $this->sendResponse($success,"Sikeres Bejelentkezés");
+            return $this->sendResponse($success,"Sikeres Bejelentkezés");
         }
         else{
             print_r("nem");
               //ha nem sikerül a bejelentkezés
-            //return $this->sendError("unathorized.".["error"=> "Hibás Adatok"]);
+            return $this->sendError("unathorized.".["error"=> "Hibás Adatok"]);
         }
+    }
+    //megérkezik a kérés
+    public function logOut(Request $request){
+        //sanctumot szolitjuk meg,megkeressük a usert,
+        //lekérjuk az aktuáli tokent,és tötöljük
+        auth("sanctum")->user()->currentAccessToken()->delete();
+        //üzenet
+        return response()->json("Successfully logout");
     }
 }

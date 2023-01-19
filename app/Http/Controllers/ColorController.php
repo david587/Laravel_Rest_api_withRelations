@@ -47,4 +47,10 @@ class ColorController extends BaseController
 
         return $this->sendResponse(New ColorResources($color), "Szín hozzáadva");
     }
+
+    public function destroy($id){
+        Color::destroy($id);
+
+        return $this->sendResponse([],"Post törölve");
+    }
 }

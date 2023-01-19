@@ -32,8 +32,19 @@ class DragonController extends BaseController
 
     public function index()
     {
-        $dragons = Dragon::with("color")->get();
+        // $dragons = Dragon::with("color")->get();
+        $dragons = Dragon::all();
         return $this->sendResponse(DragonResources::collection($dragons),"ok");
+    }
+
+    public function show($id){
+        $dragon = Dragon::find($id);
+
+        if(is_null( $dragon )){
+            return $this->sendError("Sárkány nem létezik");
+        }
+
+        return $this->sendResponse( new DragonResources($dragon), "Ok");
     }
 
     public function update(Request $request, $id ){
@@ -52,5 +63,11 @@ class DragonController extends BaseController
        $dragon->update($request->all());
 
        return $this->sendResponse(new DragonResources($dragon), "Sárkány frissítve");
+    }
+
+    public function destroy($id){
+        Dragon::destroy($id);
+
+        return $this->sendResponse([],"Post törölve");
     }
 }

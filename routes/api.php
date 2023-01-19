@@ -27,7 +27,8 @@ Route::post("/login", [AuthController::class, "signIn"]);
 //tokent küldünk,azért post
 Route::post("/logout", [AuthController::class, "logOut"]);
 Route::post("/DargonStore",[DragonController::class,"store"]);
-Route::get("/index",[DragonController::class,"index"]);
+Route::get("/indexDragon",[DragonController::class,"index"]);
+Route::get("/indexColor",[ColorController::class,"index"]);
 Route::put("/color/{id}",[ColorController::class,"update"]);
 Route::put("/dragon/{id}",[DragonController::class,"update"]);
 Route::post("/colorStore",[ColorController::class,"store"]);

@@ -9,6 +9,13 @@ use Validator;
 
 class ColorController extends BaseController
 {
+
+    public function index()
+    {
+        $colors = Color::with("dragon")->get();
+        return $this->sendResponse(ColorResources::collection($colors),"ok");
+    }
+
     public function update(Request $request, $id ){
         $input = $request->all();
 

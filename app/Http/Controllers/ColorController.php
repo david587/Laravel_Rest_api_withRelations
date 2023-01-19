@@ -25,4 +25,19 @@ class ColorController extends BaseController
 
             return $this->sendResponse(new ColorResources($color), "Szín frissítve");
     }
+
+    public function store(Request $request){
+        $input =$request->all();
+        $validator = Validator::make($input, [
+            "color" => "required"
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError($validator->errors());
+        }
+
+        $color = Color::create($input);
+
+        return $this->sendResponse(New ColorResources($color), "Szín hozzáadva");
+    }
 }

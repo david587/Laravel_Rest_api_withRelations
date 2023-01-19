@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Dragon extends JsonResource
+class Color extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +14,8 @@ class Dragon extends JsonResource
      */
     public function toArray($request)
     {
-        return[
-            "id"=> $this->id,
-            "name"=>$this->name,
-            "age"=>$this->age,
-            "color_id"=>$this->color->color
+        return [
+            "color"=>$this->color
         ];
     }
 }

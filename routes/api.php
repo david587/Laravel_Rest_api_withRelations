@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DragonController;
+use App\Http\Controllers\ColorController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +26,7 @@ Route::post("/register", [AuthController::class, "signUp"]);
 Route::post("/login", [AuthController::class, "signIn"]);
 //tokent küldünk,azért post
 Route::post("/logout", [AuthController::class, "logOut"]);
-Route::post("store","DragonController@store");
+Route::post("/store",[DragonController::class,"store"]);
+Route::get("/index",[DragonController::class,"index"]);
+Route::put("/color/{id}",[ColorController::class,"update"]);
+Route::put("/dragon/{id}",[DragonController::class,"update"]);
